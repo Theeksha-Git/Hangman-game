@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      background-color: wheat;
+    }
+  #wordInput {
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  border: black;
+  margin-bottom: 20px;
+  
+}
+
+#wordPrompt{
+  font-size: 2rem;
+}
+button {
+  font-size: 18px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+
+  </style>
+</head>
+<body>
+  <html>
+<body>
+  <center>
+  <p id="wordPrompt">Enter a word:</p>
+  <div><input type="text" id="wordInput" placeholder="Enter the word here"></div>
+  <button onclick="submitWord()">Submit</button>
+</center>
+  <script>
+    function submitWord() {
+      // Get the word that player 1 has entered
+      var word = document.getElementById("wordInput").value;
+
+      // Set the word in session storage so it can be accessed by player 2
+      sessionStorage.setItem("word", word);
+
+      // Redirect player 1 to the player 2 page
+      window.location.href = "Player2.html";
+    }
+  </script>
+
+</body>
+</html>

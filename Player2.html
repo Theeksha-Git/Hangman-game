@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      background-color: lightpink;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+#winner{
+  font-size: 30px;
+  color: rgb(64, 47, 255);
+}
+
+p {
+  margin: 2;
+}
+
+#letterInput {
+  width: 50px;
+  font-size: 20px;
+  text-align: center;
+  border: black;
+  border-bottom: 2px solid gray;
+  outline: black;
+}
+
+#dashes {
+  font-size: 60px;
+  margin: 10px 0;
+  padding-right: 10px;
+}
+
+#chances {
+  font-size: 20px;
+  color: red;
+  margin: 10px 0;
+}
+#letter{
+  font-size: 30px;
+}
+#letterCount{
+  font-size: 20px;
+}
+#wordDisplay{
+  font-size: 20px;
+}
+#resetButton{
+  font-size: 18px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+  </style>
+</head>
+<body>
+  <html>
+<body>
+  
+  <p id="letter"> Enter a Letter</p>
+ 
+  <br>
+  
+  <input type="text" id="letterInput"  onkeydown="guessLetter(event)">
+  <br>
+  <br>
+  <p id="chances"></p>
+
+  <p id="dashes"></p>
+
+  <P id="winner"></P>
+
+  <p id="letterCount"></p>
+
+  <p id="wordDisplay"></p>
+
+  <!-- <button id="resetButton">Reset</button> -->
+
+  
+  <button id="resetButton" onclick="resetGame()">Reset Game</button>
+  <script>
+   
+  //  var word = document.getElementById("wordInput").value;
+    // The word that player 1 has entered
+    var word = sessionStorage.getItem("word");
+    
+    document.getElementById("letterCount").innerHTML = "Word length: " + word.length;
+    // The number of chances that player 2 has left
+    var chances = 3;
+
+    // The dashes that represent the word
+    var dashes = "";
+
+    // Initialize the dashes to be a series of asterisks that are the same length as the word
+    for (var i = 0; i < word.length; i++) {
+      dashes += "_";
+    }
+  
+    document.getElementById("dashes").innerHTML = dashes;
+    document.getElementById("chances").innerHTML = "Chances remaining: " + chances;
+    document.getElementById("resetButton").addEventListener("click", function(){
+      redirect();
+    
+    });
+function redirect() {
+window.location.href = "Player1.html";
+}
+  
+
+    window.onload = startGame;
+
+    function startGame() {
+      // Display the dashes on the page
+      document.getElementById("dashes").innerHTML = dashes;
+    }
+
+
+    function guessLetter(event) {
+  // Check if the key pressed was the Enter key
+  if (event.keyCode === 13) {
+    // Get the letter that player 2 has entered
+    var letter = document.getElementById("letterInput").value;
+
+    // Check if the letter is in the word
+    if (word.indexOf(letter) !== -1) {
+      // The letter is in the word, so fill in the corresponding dash
+      dashes = fillInDash(dashes, word, letter);
+      if(dashes.indexOf("_") === -1) {
+        
+        document.getElementById("winner").innerHTML = "Player 2 wins!";
+        document.getElementById("wordDisplay").innerHTML="Word was: "+word;
+      }
+    } else {
+      // The letter is not in the word, so decrease the number of chances
+      chances--;
+      
+    }
+
+    // Update the dashes on the page
+    document.getElementById("dashes").innerHTML = dashes;
+
+    document.getElementById("chances").innerHTML = "Chances remaining: " + chances;
+  
+    // Check if player 2 has used up all of their chances
+    if (chances === 0) {
+      // Player 2 has used up all of their chances, so player 1 wins
+    //   alert("Player 1 wins! The word was: "+word);
+      
+    // } else if (dashes.indexOf("_") === -1) {
+    //   // All the dashes have been filled in, so player 2 wins
+    //   alert("Player 2 wins! The word was: "+word);
+    //   //alert("Player 2 loses");
+     
+    // }
+    document.getElementById("winner").innerHTML = "Player 1 wins!";
+    document.getElementById("wordDisplay").innerHTML="Word was: "+word;
+    }
+  }
+    }
+
+function fillInDash(dashes, word, letter) {
+  // Convert the word and the dashes to arrays to make it easier to manipulate the characters
+  var dashesArray = dashes.split("");
+  var wordArray = word.split("");
+
+  // Find all the indices of the letter in the word
+  var indices = [];
+  for (var i = 0; i < wordArray.length; i++) {
+    if (wordArray[i] === letter) {
+      indices.push(i);
+    }
+  }
+
+  // Replace the dashes at the indices with the letter
+  for (var i = 0; i < indices.length; i++) {
+    dashesArray[indices[i]] = letter;
+  }
+
+  // Convert the arrays back to strings and return the modified dashes string
+  return dashesArray.join("");
+}
+
+
+
+
+  </script>
+</body>
+</html>
